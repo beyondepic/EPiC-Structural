@@ -1,0 +1,357 @@
+/* FullscreenButton styles */
+.fullscreen-button-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullscreen-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0.375rem;
+  cursor: pointer;
+  color: var(--color-text-secondary, #666);
+  transition: all 0.2s ease;
+  border-radius: 0.25rem;
+  outline: none;
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.fullscreen-button:hover {
+  background: var(--color-surface, #f5f5f5);
+  color: var(--color-text, #333);
+}
+
+.fullscreen-button:focus-visible {
+  outline: 2px solid var(--color-primary, #3b82f6);
+  outline-offset: 2px;
+}
+
+.fullscreen-button:active {
+  transform: scale(0.95);
+}
+
+/* Custom corner icon styles */
+.corner-icon {
+  transition: transform 0.2s ease;
+}
+
+.fullscreen-button:hover .corner-icon {
+  transform: scale(1.1);
+}
+
+/* Tooltip styles */
+.fullscreen-tooltip {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10000;
+  animation: tooltipFadeIn 0.2s ease-in-out;
+}
+
+.fullscreen-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 0.75rem;
+  border: 0.375rem solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.9);
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal backdrop - semi-transparent overlay */
+.fullscreen-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  animation: backdropFadeIn 0.2s ease-in-out;
+  backdrop-filter: blur(2px);
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal container */
+.fullscreen-modal-container {
+  background: var(--color-background, #ffffff);
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalScaleIn 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modal header with close button */
+.fullscreen-modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1rem 0.5rem;
+  position: sticky;
+  top: 0;
+  background: var(--color-background, #ffffff);
+  z-index: 10;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.fullscreen-modal-close-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--color-text-secondary, #666);
+  transition: all 0.2s ease;
+  border-radius: 0.375rem;
+  outline: none;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.fullscreen-modal-close-button:hover {
+  background: var(--color-surface, #f5f5f5);
+  color: var(--color-text, #333);
+  transform: scale(1.05);
+}
+
+.fullscreen-modal-close-button:focus-visible {
+  outline: 2px solid var(--color-primary, #3b82f6);
+  outline-offset: 2px;
+}
+
+.fullscreen-modal-close-button:active {
+  transform: scale(0.95);
+}
+
+/* Modal content area */
+.fullscreen-modal-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem 1.5rem 1.5rem;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  /* Ensure 3D canvas and building visualizer can take full size */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure chart widget fills fullscreen modal */
+.fullscreen-modal-content #chart-widget-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.fullscreen-modal-content #chart-widget-container .chart-widget {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.fullscreen-modal-content #chart-widget-container .chart-container {
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+}
+
+/* Ensure 3D visualizer displays correctly in modal */
+.fullscreen-modal-content > div,
+.fullscreen-modal-content canvas {
+  width: 100% !important;
+  min-height: 600px;
+  flex: 1;
+}
+
+/* Specific handling for building visualizer canvas container */
+.fullscreen-modal-content .bv-canvas-container,
+.fullscreen-modal-content .bv-canvas {
+  width: 100% !important;
+  height: 70vh !important;
+  min-height: 500px !important;
+}
+
+/* Style for the element when moved to modal */
+.fullscreen-modal-content-element {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Hide fullscreen buttons inside modal content */
+.fullscreen-modal-content .fullscreen-button-wrapper,
+.fullscreen-modal-content .fullscreen-button {
+  display: none !important;
+}
+
+/* Style scrollbar for modal content */
+.fullscreen-modal-content::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.fullscreen-modal-content::-webkit-scrollbar-track {
+  background: var(--color-surface, #f5f5f5);
+  border-radius: 0.25rem;
+}
+
+.fullscreen-modal-content::-webkit-scrollbar-thumb {
+  background: var(--color-text-secondary, #999);
+  border-radius: 0.25rem;
+}
+
+.fullscreen-modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text, #666);
+}
+
+/* Ensure tables and content look good in modal */
+.fullscreen-modal-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fullscreen-modal-content .material-data-table {
+  width: 100%;
+  max-width: 100%;
+}
+
+.fullscreen-modal-content .table-container {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fullscreen-button {
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    padding: 0.25rem;
+  }
+
+  .fullscreen-tooltip {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Mobile modal adjustments */
+  .fullscreen-modal-container {
+    width: 95%;
+    max-height: 95vh;
+    border-radius: 0.5rem;
+  }
+
+  .fullscreen-modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .fullscreen-modal-header {
+    padding: 0.75rem 0.75rem 0.5rem;
+  }
+
+  .fullscreen-modal-content {
+    padding: 0.75rem 1rem 1rem;
+  }
+
+  .fullscreen-modal-close-button {
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0.375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fullscreen-modal-container {
+    width: 98%;
+    max-height: 98vh;
+  }
+
+  .fullscreen-modal-content {
+    padding: 0.5rem 0.75rem 0.75rem;
+  }
+}
+
+/* Animation for closing modal */
+.fullscreen-modal-backdrop.closing {
+  animation: backdropFadeOut 0.15s ease-in-out forwards;
+}
+
+.fullscreen-modal-backdrop.closing .fullscreen-modal-container {
+  animation: modalScaleOut 0.15s ease-in-out forwards;
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalScaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

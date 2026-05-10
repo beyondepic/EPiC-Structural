@@ -1,0 +1,795 @@
+.chart-widget {
+  background: var(--color-surface);
+  /* border-radius: var(--border-radius-lg); */ /* Removed border radius for straight corners */
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0; /* Allow shrinking below 250px when needed */
+  display: flex;
+  flex-direction: column;
+  margin: 0; /* Ensure no margins */
+  flex: 1;
+  position: relative; /* For absolute positioning of nav buttons */
+}
+
+.widget-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface) !important; /* Unified standard card background color */
+  min-height: 60px;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  /* border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; */ /* Removed border radius for straight corners */
+}
+
+.chart-title-info {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.chart-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.chart-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.2;
+}
+
+/* Icon wrapper with tooltip */
+.chart-title-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+}
+
+.chart-title-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  object-position: center;
+  flex-shrink: 0;
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.chart-title-icon-wrapper:hover .chart-title-icon {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Tooltip styling */
+.chart-icon-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: tooltipFadeIn 0.2s ease-out;
+}
+
+/* Tooltip arrow */
+.chart-icon-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.9);
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.chart-counter {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: flex-end;
+  line-height: 1.2;
+}
+
+.widget-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chart-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-secondary);
+}
+
+.chart-control-btn:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.chart-container {
+  flex: 1;
+  padding: 0.125rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0; /* Critical: Allow shrinking for responsive behavior */
+  min-height: clamp(320px, 50vh, 520px);
+  height: 100%;
+  background: var(--color-surface);
+  /* border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg); */ /* Removed border radius for straight corners */
+  display: flex;
+  flex-direction: column;
+  position: relative; /* For absolute positioning of nav buttons */
+  overflow: hidden; /* Prevent overflow during resize */
+}
+
+/* Plotly modebar styling for fullscreen mode */
+.fullscreen-modal-content .modebar {
+  top: 8px !important;
+  right: 12px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 6px !important;
+  padding: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  z-index: 20 !important;
+}
+
+.fullscreen-modal-content .modebar-btn {
+  filter: none !important;
+}
+
+/* Chart navigation buttons positioned on left and right sides */
+.chart-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chart-nav-btn:hover:not(.disabled) {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.chart-nav-btn:active:not(.disabled) {
+  transform: translateY(-50%) scale(0.9);
+}
+
+.chart-nav-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+}
+
+.chart-nav-left {
+  left: 12px;
+}
+
+.chart-nav-right {
+  right: 12px;
+}
+
+.chart-error,
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px; /* Reduced from 300px to match new container height */
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.chart-error {
+  color: #DC2626;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .widget-header {
+    padding: 1rem;
+    justify-content: center;
+  }
+  
+  .chart-container {
+    padding: 0.25rem;
+    min-height: clamp(280px, 55vh, 420px);
+  }
+  
+  .widget-title {
+    font-size: 1rem;
+  }
+}
+
+/* Chart navigation responsive styles */
+@media (max-width: 768px) {
+  .chart-nav-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .chart-nav-left {
+    left: 8px;
+  }
+  
+  .chart-nav-right {
+    right: 8px;
+  }
+}
+
+/* Integrated table styles */
+.integrated-table {
+  padding: 0.75rem; /* Reduced from 1rem to save space */
+  background: inherit;
+}
+
+.table-separator {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0.5rem 0; /* Reduced from 1rem 0 to save space */
+}
+
+.integrated-table-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0; /* Reduced from 1rem to save space */
+}
+
+.integrated-table-title.collapsible {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.integrated-table-title.collapsible span {
+  flex: 1;
+}
+
+.integrated-table-title.collapsible svg {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.integrated-table-title.collapsible:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.integrated-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.integrated-data-table th,
+.integrated-data-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.integrated-data-table th {
+  background: var(--color-background);
+  font-weight: 600;
+  color: var(--color-text);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.integrated-data-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.integrated-data-table th.sortable:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.integrated-data-table .th-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.integrated-data-table .sort-icon {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.integrated-data-table .sort-icon.active {
+  opacity: 1;
+  color: var(--color-primary, #3B82F6);
+}
+
+.integrated-data-table .sort-icon.inactive {
+  opacity: 0.3;
+}
+
+.integrated-data-table th.sortable:hover .sort-icon.inactive {
+  opacity: 0.6;
+}
+
+.integrated-data-table td {
+  color: var(--color-text-secondary);
+}
+
+/* Hover highlight - base hover effect (lowest priority) */
+.integrated-data-table tr:hover {
+  background: #f8f9fa; /* Consistent light gray hover effect with MaterialTable */
+  cursor: pointer;
+}
+
+.integrated-data-table .optimal-row {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* Optimal row hover effect - maintain visual consistency of optimal state */
+.integrated-data-table .optimal-row:hover {
+  background: rgba(34, 197, 94, 0.1); /* Keep same as non-hover state to avoid visual confusion */
+  cursor: pointer;
+}
+
+/* Highlighted row styles for table-chart interaction */
+.integrated-data-table .highlighted-row {
+  background: rgba(59, 130, 246, 0.08) !important;
+  transition: all 0.15s ease-in-out;
+}
+
+.integrated-data-table .highlighted-row td {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Integrated table styles - table inside chart container */
+.chart-table-integrated {
+  margin-top: 0.25rem; /* Reduced from 1rem to minimize gap */
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.table-separator {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0.25rem 0; /* Reduced from 1rem to minimize gap */
+  opacity: 0.3;
+}
+
+.chart-table-integrated .table-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 1rem 0;
+  padding-left: 0.5rem;
+}
+
+.chart-table-integrated .table-container {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: white;
+}
+
+.chart-table-integrated .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.chart-table-integrated .data-table th,
+.chart-table-integrated .data-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chart-table-integrated .data-table th {
+  background: var(--color-background);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.chart-table-integrated .data-table td {
+  color: var(--color-text-secondary);
+  background: white;
+}
+
+/* Hover highlight - base hover effect (lowest priority) */
+.chart-table-integrated .data-table tr:hover {
+  background: #f8f9fa; /* Consistent light gray hover effect with other tables */
+  cursor: pointer;
+}
+
+.chart-table-integrated .optimal-row {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* Optimal row hover effect - maintain visual consistency */
+.chart-table-integrated .optimal-row:hover {
+  background: rgba(34, 197, 94, 0.1); /* Same as non-hover state */
+  cursor: pointer;
+}
+
+/* Responsive adjustments for integrated table */
+@media (max-width: 768px) {
+  .chart-table-integrated .data-table {
+    font-size: 0.8rem;
+  }
+  
+  .chart-table-integrated .data-table th,
+  .chart-table-integrated .data-table td {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Authentication placeholder styles */
+.auth-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  flex: 1;
+  text-align: center;
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+}
+
+.auth-message {
+  max-width: 400px;
+  margin-bottom: 0.5rem; /* Reduced from 2rem to minimize gap */
+}
+
+.auth-message h4 {
+  color: var(--color-text);
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.auth-message p {
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.placeholder-chart {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background: white;
+  border: 2px dashed #e2e8f0;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.placeholder-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.placeholder-bars .bar {
+  background: linear-gradient(to top, #cbd5e1, #e2e8f0);
+  width: 1.5rem;
+  border-radius: 2px 2px 0 0;
+  opacity: 0.5;
+  animation: pulse 2s infinite;
+}
+
+.placeholder-bars .bar:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.placeholder-bars .bar:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.placeholder-bars .bar:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.placeholder-bars .bar:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.placeholder-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.placeholder-overlay span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+.chart-widget {
+  background: var(--color-surface);
+  /* border-radius: var(--border-radius-lg); */ /* Removed border radius for straight corners */
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+  min-height: 60px;
+}
+
+.widget-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chart-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-secondary);
+}
+
+.chart-control-btn:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.chart-container {
+  flex: 1;
+  padding: 1rem;
+  min-height: 300px; /* Reduced to match main container height */
+  position: relative;
+}
+
+.chart-error,
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px; /* Reduced to match container height */
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.chart-error {
+  color: #DC2626;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .widget-header {
+    padding: 1rem;
+    justify-content: center;
+  }
+  
+  .chart-container {
+    padding: 0.5rem;
+    min-height: 300px;
+  }
+  
+  .widget-title {
+    font-size: 1rem;
+  }
+}
+
+/* Performance badge styles for table */
+.performance-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.percentage-value {
+  font-weight: 500;
+}
+
+.performance-badge-table {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Optimal value styling */
+.percentage-value {
+  font-weight: 500;
+}
+
+.percentage-value:has-text('Optimal') {
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* Optimal value styling */
+.optimal-value {
+  color: #10b981 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Locked highlight - selected state (highest priority) */
+.selected-row {
+  background-color: rgba(59, 130, 246, 0.12) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1) !important;
+  position: relative; /* Relative positioning for pseudo-element reference */
+}
+
+/* Locked highlight state hover - keep selected style unchanged (override default hover effect) */
+.selected-row:hover {
+  background-color: rgba(59, 130, 246, 0.12) !important; /* Same as selected state */
+  cursor: pointer;
+}
+
+/* Program-controlled highlight state combined with selected state */
+.selected-row.highlighted-row {
+  background-color: rgba(59, 130, 246, 0.18) !important;
+}
+
+/* Combined state hover - keep combined style unchanged */
+.selected-row.highlighted-row:hover {
+  background-color: rgba(59, 130, 246, 0.18) !important; /* Same as combined state */
+  cursor: pointer;
+}
+
+/* Ensure table rows have relative positioning for the indicator */
+.integrated-data-table tbody tr {
+  position: relative;
+}
+
+/* Ensure table corners follow container border radius */
+.chart-table-integrated .data-table thead tr:first-child th:first-child {
+  border-top-left-radius: 5px;
+}
+
+.chart-table-integrated .data-table thead tr:first-child th:last-child {
+  border-top-right-radius: 5px;
+}
+
+.chart-table-integrated .data-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 5px;
+}
+
+.chart-table-integrated .data-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 5px;
+}
+
+/* Ensure smooth transitions for all interactive elements */
+.chart-table-integrated .data-table tbody tr {
+  transition: background-color 0.2s ease; /* Only transition background color to avoid layout shift */
+  position: relative; /* Ensure all rows have correct positioning context */
+}
+
+/* Unified hover highlight effect */
+.chart-table-integrated .data-table tbody tr:hover {
+  background-color: #f8f9fa; /* Consistent light gray hover effect with other tables */
+}

@@ -1,0 +1,28 @@
+{
+  "ShearWall": {
+    "32 MPa RC": {
+      "rectangle": {
+        "Embodied_GHG_kgCO2e/m^2": {
+          "intercept": 1.672,
+          "coefficients": [0.053, -2.39, 0.493, -0.013, 6.724, 7.297, 7.487, 22.386],
+          "rSquared": 0.8809515964171775
+        },
+        "Embodied_Energy_MJ/m^2": {
+          "intercept": 64.324,
+          "coefficients": [0.521, -20.182, 4.342, -0.302, 59.323, 64.524, 68.197, 181.55],
+          "rSquared": 0.9044719110494106
+        },
+        "Embodied_Water_L/m^2": {
+          "intercept": 121.985,
+          "coefficients": [0.696, -22.293, 5.425, -1.686, 87.464, 95.709, 129.637, 211.558],
+          "rSquared": 0.9152540262722176
+        },
+        "Cost_per_NFA_AUD/m^2": {
+          "intercept": 140.861,
+          "coefficients": [0.039, 3.336, -0.176, -0.29, -0.8, -0.92, 12.137, 1.825],
+          "rSquared": 0.917918733659819
+        }
+      }
+    }
+  }
+}

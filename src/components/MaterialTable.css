@@ -1,0 +1,324 @@
+.material-data-table th.active-metric-col,
+.material-data-table td.active-metric-col {
+  background: #e6f0fa !important;
+}
+.material-table-widget {
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0; /* Critical: Allow shrinking for responsive behavior */
+  margin: 0; /* Remove any default margins */
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.widget-title {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.widget-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  width: 100%; /* Ensure full width utilization */
+  min-width: 0; /* Allow shrinking */
+  flex: 1; /* Grow to fill available space */
+}
+
+.material-data-table {
+  width: 100%;
+  min-width: 0; /* Allow table to shrink */
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  table-layout: auto; /* Allow flexible column sizing */
+}
+
+.material-data-table th {
+  background: var(--color-background);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  top: 0;
+  z-index: 10;
+  min-width:50px;
+}
+
+.material-data-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.material-data-table th.sortable:hover {
+  background: var(--color-surface);
+}
+
+.th-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Centered header content - for text headers like "Material" */
+.th-content-centered {
+  justify-content: center;
+}
+
+/* Icon-only header content - center aligned */
+.th-content-icon {
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.sort-icon {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.sort-icon.active {
+  opacity: 1;
+  color: var(--primary-color);
+}
+
+.material-data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  min-width:50px;
+}
+
+.material-data-table tr {
+  transition: background-color 0.2s ease;
+  position: relative; /* Ensure all rows have correct positioning context */
+}
+
+/*
+ * Table row highlight priority system:
+ * 1. Base hover effect (lowest priority) - light gray #f8f9fa
+ * 2. Program-controlled highlight (medium priority) - light blue #e6f0fa
+ * 3. Locked highlight/selected state (highest priority) - theme color transparent version
+ *
+ * Important rule: High priority states maintain their original style on hover
+ */
+
+/* Hover highlight - base hover effect (lowest priority) */
+.material-data-table tr:hover {
+  background: #f8f9fa; /* Light gray hover effect */
+  cursor: pointer;
+}
+
+/* Program-controlled highlight state (medium priority) */
+.material-data-table tr.highlighted-row {
+  background: #e6f0fa !important;
+  outline: none !important;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Locked highlight - selected state (highest priority) */
+.material-data-table tr.selected-row {
+  background: rgba(23, 113, 176, 0.1) !important; /* Use transparent version of primary color */
+  outline: none !important;
+  border-bottom: 1px solid var(--color-border);
+  position: relative; /* Ensure positioning context for pseudo-elements */
+  border-left: 3px solid var(--color-primary) !important; /* Use left border as selection indicator */
+}
+
+/* Locked highlight state hover - keep selected style unchanged (override default hover effect) */
+.material-data-table tr.selected-row:hover {
+  background: rgba(23, 113, 176, 0.1) !important; /* Identical to selected state */
+  cursor: pointer;
+}
+
+/* Program-controlled highlight state hover - keep highlight style unchanged */
+.material-data-table tr.highlighted-row:hover {
+  background: #e6f0fa !important; /* Identical to highlight state */
+  cursor: pointer;
+}
+
+.material-data-table tr.optimal-row {
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.material-data-table tr.optimal-row.selected-row {
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.performance-cell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  min-height: 2.5rem;
+}
+
+.value-display {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.2;
+  flex-shrink: 0;
+  width: 50px;
+}
+
+.status-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.status-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.5rem;
+  width: 70px;
+  gap: 0.25rem;
+}
+
+.status-text {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  text-align: center;
+  line-height: 1;
+}
+
+.percentage-box {
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  opacity: 0.9;
+}
+
+
+.status-box.optimal-status-box {
+  background: #ecfdf5;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.status-text.optimal-status-text {
+  color: #22c55e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.empty-status-box {
+  background: var(--color-background-alt, #f1f5f9);
+  border: 1px dashed rgba(148, 163, 184, 0.4);
+}
+
+.empty-status-box .status-text,
+.empty-status-box .percentage-box {
+  color: var(--color-text-secondary);
+}
+
+/* Additional protection rules to prevent layout shift */
+.material-data-table tr.selected-row td:first-child,
+.material-data-table tr.highlighted-row td:first-child,
+.material-data-table tr:hover td:first-child {
+  padding-left: 1rem; /* Ensure consistent padding for first column in all states */
+}
+
+/* Ensure pseudo-elements and borders don't affect table cell content position */
+.material-data-table td {
+  box-sizing: border-box; /* Ensure borders are included in element total width */
+}
+
+/* 
+ * Layout shift protection explanation:
+ * Hover state only allows changing properties that don't affect layout
+ * ✅ Allowed: background-color, color, opacity, box-shadow
+ * ❌ Forbidden: padding, margin, border-width, transform, width, height
+ */
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .material-data-table {
+    font-size: 0.8rem;
+  }
+  
+  .material-data-table th,
+  .material-data-table td {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .material-table-title {
+    padding: 0.875rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Maintain consistent padding for first column on mobile as well */
+  .material-data-table tr.selected-row td:first-child,
+  .material-data-table tr.highlighted-row td:first-child {
+    padding-left: 0.75rem;
+  }
+
+  /* Mobile adjustments for new layout */
+  .performance-cell {
+    --metric-value-width: 120px;
+    gap: 0.375rem;
+    padding: 0.125rem 0;
+    min-height: 2rem;
+  }
+
+  .value-display {
+    font-size: 0.75rem;
+  }
+
+  .status-box {
+    min-width: 60px;
+    padding: 0.25rem 0.375rem;
+    gap: 0.125rem;
+    width: 60px;
+  }
+
+  .status-text {
+    font-size: 0.5rem;
+  }
+
+  .percentage-box {
+    font-size: 0.5rem;
+    padding: 0.0625rem 0.1875rem;
+  }
+}

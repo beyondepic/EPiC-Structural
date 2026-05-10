@@ -1,0 +1,52 @@
+.export-pdf-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: var(--color-primary, #1771B0);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius, 8px);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(23, 113, 176, 0.2);
+}
+
+.export-pdf-button:hover:not(:disabled) {
+  background: var(--color-primary-hover, #145a8a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(23, 113, 176, 0.3);
+}
+
+.export-pdf-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(23, 113, 176, 0.2);
+}
+
+.export-pdf-button:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+
+.export-pdf-button:disabled:hover {
+  background: #9CA3AF;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .export-pdf-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+  
+  .export-pdf-button span {
+    display: none;
+  }
+}

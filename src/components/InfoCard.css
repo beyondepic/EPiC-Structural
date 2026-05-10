@@ -1,0 +1,60 @@
+.info-card {
+  background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+  border: 1px solid rgba(23, 113, 176, 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.info-content {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.info-description {
+  margin: 0 0 1.25rem 0;
+  text-align: justify;
+}
+
+.citation-section {
+  border-top: 1px solid rgba(23, 113, 176, 0.15);
+  padding-top: 1rem;
+}
+
+.citation-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.citation-text {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  text-align: justify;
+}
+
+.info-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.info-link:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.info-link svg {
+  opacity: 0.7;
+}

@@ -1,0 +1,394 @@
+.app {
+  height: 100vh; /* 固定高度为视口高度 */
+  display: flex;
+  flex-direction: column; /* 垂直布局：Header + Dashboard */
+  background: var(--color-background);
+  overflow: hidden; /* 禁用 app 容器滚动 */
+}
+
+.dashboard {
+  display: flex;
+  flex: 1; /* 占据剩余空间（100vh - Header 高度）*/
+  height: 0; /* 重要：配合 flex:1 实现正确的高度计算 */
+  overflow: hidden; /* 禁用 dashboard 容器滚动 */
+}
+
+/* Main content layout */
+
+.sidebar {
+  background: var(--color-background);
+  padding: 1.5rem;
+  overflow-y: auto; /* 左侧独立垂直滚动 */
+  overflow-x: hidden;
+  border-right: 1px solid var(--color-border);
+  transition: width 0.3s ease, min-width 0.3s ease, padding 0.3s ease;
+  flex-shrink: 0;
+  height: 100%; /* 占满父容器高度 */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--color-border) transparent; /* Firefox */
+  /* 防止 iOS Safari 橡皮筋回弹 */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Webkit scrollbar styling for Chrome, Safari, Edge */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+.sidebar.hidden {
+  padding: 0;
+  overflow: hidden;
+  border-right: none;
+  max-height: none; /* Remove height limit when hidden */
+}
+
+.resizable-sidebar {
+  position: relative;
+}
+
+.resize-handle {
+  width: 6px;
+  background: transparent;
+  cursor: col-resize;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.resize-handle:hover {
+  background: var(--color-border);
+}
+
+.resize-handle.resizing {
+  background: var(--primary-color);
+}
+
+.resize-handle-line {
+  width: 2px;
+  height: 40px;
+  background: var(--color-border);
+  border-radius: 1px;
+  transition: background-color 0.2s ease;
+}
+
+.resize-handle:hover .resize-handle-line,
+.resize-handle.resizing .resize-handle-line {
+  background: var(--primary-color);
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+.sidebar.collapsed {
+  width: 300px;
+  min-width: 300px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1rem 1.5rem 0.25rem 1.5rem;
+  overflow-y: auto; /* 右侧独立垂直滚动 */
+  overflow-x: hidden;
+  min-width: 250px;
+  height: 100%; /* 占满父容器高度 */
+  transition: all 0.3s ease;
+  /* 防止 iOS Safari 橡皮筋回弹 */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--color-border) transparent; /* Firefox */
+}
+
+/* 右侧滚动条样式 */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+.content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 100%;
+  min-height: min-content; /* 内容决定高度，不再固定最小高度 */
+  padding-bottom: 1rem;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  align-items: stretch;
+  min-height: 0;
+  /* Ensure child elements can shrink and grow */
+  flex: 1;
+}
+
+/* Left Column: 3D Visualizer (40%) */
+.left-column {
+  flex: 0 0 35%; /* Fixed 40% width */
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  min-width: 0; /* Allow shrinking below content size */
+  overflow: hidden; /* Prevent overflow */
+}
+
+/* Right Column: Chart + Table (60%) */
+.right-column {
+  flex: 1 1 65%; /* Flexible 60% width */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100%;
+  min-width: 0; /* Critical: Allow shrinking below content size */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.chart-section,
+.table-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0; /* Critical: Allow content to shrink */
+  width: 100%; /* Take full available width */
+}
+
+/* Wrapper for chart content */
+.chart-section .chart-only-section {
+  flex: 1;
+  width: 100%;
+  min-height: 340px;
+  min-width: 0; /* Allow shrinking */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* 3D visualizer container */
+.visualizer-section {
+  flex: 1;
+  width: 100%;
+  min-height: 420px;
+  min-width: 0; /* Allow shrinking */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+
+.table-section .material-table-widget {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  width: 100%; /* Ensure table takes full width */
+  min-width: 0; /* Allow shrinking */
+}
+
+.full-width-section {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.full-width-section > * {
+  width: 100%;
+}
+
+/* Force unified title area background color - ensure visual consistency */
+.visualizer-section .widget-header,
+.chart-section .widget-header {
+  background: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+/* Large screens - ensure reasonable heights */
+@media (min-width: 1440px) {
+  .visualizer-section {
+    min-height: 520px;
+  }
+
+  .chart-section {
+    min-height: 420px;
+  }
+
+  .table-section {
+    min-height: 340px;
+  }
+}
+
+/* Medium screens */
+@media (max-width: 1200px) {
+  .visualizer-section {
+    min-height: 380px;
+  }
+
+  .chart-section {
+    min-height: 320px;
+  }
+
+  .table-section {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    position: relative;
+    flex-direction: column; /* 移动端改为上下布局 */
+  }
+  
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 49;
+  }
+  
+  .sidebar:not(.hidden) {
+    position: fixed;
+    top: 72px; /* Account for header height */
+    left: 0;
+    width: min(90vw, 350px) !important;
+    min-width: min(90vw, 350px) !important;
+    height: calc(100vh - 72px); /* 移动端侧边栏占满剩余高度 */
+    z-index: 50;
+    box-shadow: var(--shadow-lg);
+    background: var(--color-surface);
+    overflow-y: auto; /* 移动端侧边栏独立滚动 */
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Webkit scrollbar styling for mobile sidebar */
+  .sidebar:not(.hidden)::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .sidebar:not(.hidden)::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .sidebar:not(.hidden)::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+  
+  .sidebar:not(.hidden)::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-secondary);
+  }
+  
+  .sidebar.hidden + .sidebar-overlay {
+    display: none;
+  }
+  
+  .resize-handle {
+    display: none;
+  }
+  
+  .main-content {
+    padding: 1rem;
+    height: 100%; /* 移动端主内容区域占满剩余高度 */
+    overflow-y: auto; /* 移动端主内容区域独立滚动 */
+  }
+  
+  .content-grid {
+    flex-direction: column; /* Stack vertically on mobile */
+    min-height: min-content; /* 内容决定高度 */
+  }
+
+  .main-layout {
+    flex-direction: column;
+  }
+  
+  .left-column {
+    flex: none; /* Remove flex basis on mobile */
+    width: 100%;
+  }
+  
+  .right-column {
+    flex: none; /* Remove flex basis on mobile */
+    width: 100%;
+  }
+  
+  .visualizer-section {
+    height: 320px; /* Smaller height for mobile */
+    min-height: 260px;
+  }
+
+  .chart-section {
+    min-height: 260px; /* Smaller height for mobile */
+  }
+
+  .table-section {
+    min-height: 220px; /* Smaller height for mobile */
+  }
+
+  .full-width-section {
+    margin-top: 1rem;
+  }
+}
+
+/* Global resizing state to freeze expensive component updates */
+body.is-resizing * {
+  /* Prevent layout recalculations during resize */
+  contain: layout style paint;
+}
+
+/* Freeze Three.js canvas updates during resize */
+body.is-resizing canvas {
+  pointer-events: none;
+}
+
+/* Freeze Plotly chart updates during resize */
+body.is-resizing [data-plotly] {
+  pointer-events: none;
+}
+
+/* Ensure resize handles remain interactive */
+.resize-handle {
+  pointer-events: auto !important;
+  z-index: 1000;
+}

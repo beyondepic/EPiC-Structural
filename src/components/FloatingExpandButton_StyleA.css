@@ -1,0 +1,135 @@
+.floating-expand-btn.style-a {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  
+  background: linear-gradient(135deg, 
+    var(--color-primary) 0%, 
+    var(--color-secondary) 100%);
+  
+  box-shadow: 
+    0 4px 12px rgba(23, 113, 176, 0.3),
+    0 2px 8px rgba(23, 113, 176, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+  
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover state - deep three-dimensional effect */
+.floating-expand-btn.style-a:hover {
+  transform: translateY(-2px) scale(1.05);
+  
+  /* Enhanced shadow depth */
+  box-shadow: 
+    0 8px 24px rgba(23, 113, 176, 0.4),
+    0 4px 16px rgba(23, 113, 176, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+    
+  /* Background gradient change */
+  background: linear-gradient(135deg, 
+    var(--color-primary-hover) 0%, 
+    var(--color-primary) 100%);
+}
+
+/* 🎯 Active state - press effect */
+.floating-expand-btn.style-a:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 2px 8px rgba(23, 113, 176, 0.3),
+    0 1px 4px rgba(23, 113, 176, 0.2);
+}
+
+/* ✨ Ripple effect - modern interaction feedback */
+.floating-expand-btn.style-a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.floating-expand-btn.style-a:active::before {
+  width: 120%;
+  height: 120%;
+}
+
+/* 🔄 Drag state special handling */
+.floating-expand-btn.style-a[style*="grabbing"] {
+  transform: scale(1.1);
+  box-shadow: 
+    0 12px 32px rgba(23, 113, 176, 0.5),
+    0 6px 20px rgba(23, 113, 176, 0.4);
+  background: linear-gradient(135deg, 
+    var(--color-secondary) 0%, 
+    var(--color-primary) 100%);
+}
+
+/* 🎨 Icon animation */
+.floating-expand-btn.style-a svg {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-expand-btn.style-a:hover svg {
+  transform: translateX(2px);
+}
+
+/* 📱 Responsive adaptation */
+@media (max-width: 768px) {
+  .floating-expand-btn.style-a {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* 🌗 Dark mode adaptation */
+@media (prefers-color-scheme: dark) {
+  .floating-expand-btn.style-a {
+    box-shadow: 
+      0 4px 12px rgba(49, 130, 206, 0.4),
+      0 2px 8px rgba(49, 130, 206, 0.3),
+      0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .floating-expand-btn.style-a:hover {
+    box-shadow: 
+      0 8px 24px rgba(49, 130, 206, 0.5),
+      0 4px 16px rgba(49, 130, 206, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* 🎭 Subtle pulse animation to prompt user interaction */
+@keyframes subtle-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 4px 12px rgba(23, 113, 176, 0.3),
+      0 2px 8px rgba(23, 113, 176, 0.2),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 6px 16px rgba(23, 113, 176, 0.4),
+      0 3px 10px rgba(23, 113, 176, 0.3),
+      0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.floating-expand-btn.style-a.pulse-hint {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}

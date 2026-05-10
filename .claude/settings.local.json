@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/365-pruthvi/development/BeyondEPiC/EPiC-Admin/**)",
+      "Read(//Users/365-pruthvi/development/BeyondEPiC/EPiC-Explorer/**)",
+      "Bash(while read file)",
+      "Bash(do mv \"$file\" \"$file%.jsx.tsx\")",
+      "Bash(done)",
+      "Bash(do mv \"$file\" \"$file%.js.ts\")",
+      "Bash(npm install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

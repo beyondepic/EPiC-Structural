@@ -1,0 +1,167 @@
+.floating-action-button {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  
+  /* Gradient background */
+  background: linear-gradient(135deg, 
+    var(--color-primary, #4A90E2) 0%, 
+    var(--color-secondary, #357ABD) 100%);
+  
+  /* 3D shadow effect */
+  box-shadow: 
+    0 4px 12px rgba(74, 144, 226, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  /* Fast transition - reduce delay */
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Icon style */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  
+  /* Hardware acceleration */
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fab-icon {
+  transition: transform 0.15s ease;
+  will-change: transform;
+}
+
+/* Hover effect - fast response */
+.floating-action-button.fab-hover,
+.floating-action-button:hover {
+  transform: translateY(-50%) translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(74, 144, 226, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.floating-action-button.fab-hover .fab-icon,
+.floating-action-button:hover .fab-icon {
+  transform: translateX(2px);
+}
+
+/* Click effect - instant feedback */
+.floating-action-button.fab-clicked,
+.floating-action-button:active {
+  transform: translateY(-50%) scale(0.95);
+  box-shadow: 
+    0 2px 8px rgba(74, 144, 226, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Ripple effect */
+.floating-action-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+  pointer-events: none;
+}
+
+.floating-action-button.fab-clicked::before {
+  width: 120%;
+  height: 120%;
+}
+
+/* Focus state */
+.floating-action-button:focus {
+  box-shadow: 
+    0 4px 12px rgba(74, 144, 226, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+/* Disabled state */
+.floating-action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.floating-action-button:disabled:hover {
+  transform: translateY(-50%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme adaptation */
+@media (prefers-color-scheme: dark) {
+  .floating-action-button {
+    background: linear-gradient(135deg, 
+      #5A9FFF 0%, 
+      #4A90E2 100%);
+    box-shadow: 
+      0 4px 12px rgba(90, 159, 255, 0.25),
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .floating-action-button.fab-hover,
+  .floating-action-button:hover {
+    box-shadow: 
+      0 8px 25px rgba(90, 159, 255, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .floating-action-button {
+    width: 48px;
+    height: 48px;
+    left: 16px;
+  }
+  
+  .fab-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Reduce animations and transitions (for performance-sensitive users) */
+@media (prefers-reduced-motion: reduce) {
+  .floating-action-button,
+  .fab-icon,
+  .floating-action-button::before {
+    transition: none;
+  }
+  
+  .floating-action-button.fab-hover,
+  .floating-action-button:hover {
+    transform: translateY(-50%);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .floating-action-button {
+    border: 2px solid currentColor;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

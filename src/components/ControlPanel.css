@@ -1,0 +1,133 @@
+.control-panel {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  height: fit-content;
+  overflow: hidden;
+  
+  /* Control spacing variables for consistency */
+  --control-label-spacing: 0.75rem;
+  --control-bottom-spacing: 1.5rem;
+  --control-internal-spacing: 0.75rem;
+}
+
+.control-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-toggle {
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.panel-toggle:hover {
+  background: var(--color-border);
+  color: var(--color-primary);
+}
+
+.auth-status {
+  display: flex;
+  align-items: center;
+}
+
+.auth-indicator {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  background: #fff3cd;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid #ffeaa7;
+}
+
+.control-panel-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.control-panel-content {
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  max-height: calc(100vh - 200px); /* Limit height to viewport minus header space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.control-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.control-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 2rem 0;
+  padding-bottom: 0.5rem;
+  /* border-bottom: 2px solid var(--color-primary); */
+  position: relative;
+}
+
+/* .section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--color-secondary);
+} */
+
+/* Modern waterfall scrollbar styling */
+.control-panel-content::-webkit-scrollbar {
+  width: 8px; /* Narrow scrollbar */
+}
+
+.control-panel-content::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track */
+  border-radius: 4px;
+}
+
+.control-panel-content::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.3); /* Semi-transparent gray */
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.control-panel-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.5); /* More visible on hover */
+  background-clip: padding-box;
+}
+
+.control-panel-content::-webkit-scrollbar-thumb:active {
+  background: rgba(107, 114, 128, 0.7); /* Even more visible when active */
+  background-clip: padding-box;
+}
+
+/* Firefox scrollbar styling */
+.control-panel-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 114, 128, 0.3) transparent;
+}
