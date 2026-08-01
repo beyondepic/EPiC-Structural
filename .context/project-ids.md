@@ -1,5 +1,19 @@
 # Project Identifiers
 
+## Client
+
+- **Client:** `beyondepic`
+  <!-- REQUIRED. Lowercase, no punctuation. This is the primary key the memory
+       resolver uses to load client-level context, and it is declared rather than
+       derived from the git remote on purpose: forks resolve to the fork owner,
+       the client can be on `upstream` while `origin` is personal, submodules
+       resolve their own remote, monorepos can hold two products, orgs get
+       renamed, and one client can span two orgs.
+
+       This repo is the easy case (org and client happen to match), which is
+       exactly why it must still be stated. A value that is correct by
+       coincidence is not a source of truth. -->
+
 ## GitHub
 
 - **Org:** beyondepic
