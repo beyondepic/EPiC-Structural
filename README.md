@@ -34,7 +34,7 @@ Not self-contained despite its own Flask service: .env sets VITE_API_BASE_URL=ht
 The whole platform, layered. This repo is highlighted.
 
 ```mermaid
-%%{init: {"flowchart": {"curve": "step", "nodeSpacing": 45, "rankSpacing": 55}}}%%
+%%{init: {"flowchart": {"nodeSpacing": 45, "rankSpacing": 55}}}%%
 graph TD
     subgraph client["Client applications"]
         NestedPhoenix_UI["NestedPhoenix-UI<br/>UI :5173"]
