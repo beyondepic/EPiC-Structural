@@ -16,7 +16,9 @@ export default defineConfig({
     global: "globalThis",
   },
   server: {
-    port: 5175,
+    // 5177, not 5175: EPiC-Explorer serves on 5175, so the two cannot run
+    // side by side. strictPort so a silent fallback cannot recreate the clash.
+    port: 5177,
     host: true,
     strictPort: false,
   },
