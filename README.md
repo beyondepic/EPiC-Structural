@@ -1,4 +1,112 @@
-# EPiC Structural Dashboard (React Edition)
+<!-- BEGIN GENERATED HEADER - edit .context/repos.yaml in beyondepic-workspace, not here -->
+
+<div align="center">
+
+  <img src="docs/assets/beyondepic-logo.png" alt="Beyond EPiC" width="240">
+
+# EPiC-Structural
+
+**Structural engineering dashboard. Ships a React frontend and its own Flask service.**
+
+![stack](https://img.shields.io/badge/stack-React%20/%20Vite%20+%20Flask-0E0F52?style=flat-square) ![layer](https://img.shields.io/badge/layer-Client%20applications-4A5568?style=flat-square) ![ports](https://img.shields.io/badge/ports-UI%20:5177%20%20API%20:8002-4A5568?style=flat-square) [![platform](https://img.shields.io/badge/platform-BeyondEPiC-0E0F52?style=flat-square)](https://github.com/beyondepic/beyondepic-workspace)
+
+</div>
+
+---
+
+## What this is
+
+Structural engineering dashboard. Ships a React frontend and its own Flask service.
+
+Not self-contained despite its own Flask service: .env sets VITE_API_BASE_URL=http://localhost:8000, so it also reads NestedPhoenix.
+
+### What it runs
+
+| Component | Tech | Port |
+|---|---|---|
+| Frontend | React / Vite | `5177` |
+| Backend | Flask (backend/flask_regression_api.py) | `8002` |
+
+> Was 5175, which collided with EPiC-Explorer. Moved to 5177 with strictPort in the repo itself, so it is correct standalone.
+
+## Where it sits
+
+The whole platform, layered. This repo is highlighted.
+
+```mermaid
+graph TD
+    subgraph client["Client applications"]
+        NestedPhoenix_UI["NestedPhoenix-UI<br/>UI :5173"]
+        EPiC_Admin["EPiC-Admin<br/>UI :5174"]
+        EPiC_Explorer["EPiC-Explorer<br/>UI :5175"]
+        EPiC_Urban["EPiC-Urban<br/>UI :5176 · API :8001"]
+        EPiC_Structural["EPiC-Structural<br/>UI :5177 · API :8002"]
+        EPiC_Revit["EPiC-Revit"]
+    end
+    subgraph shared["Shared libraries"]
+        beyondepic_api_client["beyondepic-api-client"]
+        beyondepic_auth_client["beyondepic-auth-client"]
+    end
+    subgraph service["Backend services"]
+        NestedPhoenix["NestedPhoenix<br/>API :8000"]
+    end
+    subgraph platform["Platform services"]
+        beyondepic_auth_server["beyondepic-auth-server<br/>API :8180"]
+    end
+    subgraph infra["Infrastructure"]
+        EPiC_infrastructure["EPiC-infrastructure"]
+    end
+    subgraph data["Data and messaging"]
+        postgresql[("PostgreSQL + PostGIS<br/>:5432")]
+        rabbitmq[("RabbitMQ + Celery<br/>:5672")]
+        redis[("Redis<br/>:6379")]
+    end
+    NestedPhoenix_UI --> NestedPhoenix
+    NestedPhoenix_UI --> beyondepic_auth_client
+    EPiC_Admin --> NestedPhoenix
+    EPiC_Admin --> beyondepic_api_client
+    EPiC_Admin --> beyondepic_auth_client
+    EPiC_Explorer --> NestedPhoenix
+    EPiC_Explorer --> EPiC_Admin
+    EPiC_Explorer --> beyondepic_api_client
+    EPiC_Explorer --> beyondepic_auth_client
+    EPiC_Urban --> NestedPhoenix
+    EPiC_Urban --> EPiC_Admin
+    EPiC_Structural --> NestedPhoenix
+    EPiC_Revit --> NestedPhoenix
+    EPiC_Revit --> beyondepic_auth_server
+    beyondepic_auth_client --> beyondepic_auth_server
+    NestedPhoenix --> beyondepic_auth_server
+    NestedPhoenix --> postgresql
+    NestedPhoenix --> rabbitmq
+    NestedPhoenix --> redis
+    NestedPhoenix_UI ~~~ beyondepic_api_client
+    beyondepic_api_client ~~~ NestedPhoenix
+    NestedPhoenix ~~~ beyondepic_auth_server
+    beyondepic_auth_server ~~~ postgresql
+    style EPiC_Structural fill:#0E0F52,color:#fff,stroke:#0E0F52,stroke-width:2px
+```
+
+Nothing depends on this repo; it is a leaf.
+
+## Running it locally
+
+The whole platform runs with one command from the workspace repo, which clones the
+services this one needs and starts them in dependency order:
+
+```bash
+git clone https://github.com/beyondepic/beyondepic-workspace.git
+cd beyondepic-workspace && make setup
+```
+
+This repo then serves on **UI :5177 · API :8002**.
+
+See [GETTING-STARTED.md](https://github.com/beyondepic/beyondepic-workspace/blob/main/GETTING-STARTED.md)
+for the architecture, the local setup, and the traps worth knowing before you start.
+
+<!-- END GENERATED HEADER -->
+
+---
 
 A modern, interactive structural engineering analytics dashboard built with React for performance analysis and material comparison visualization.
 
