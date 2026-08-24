@@ -96,7 +96,8 @@ The whole platform runs with one command from the workspace repo, which clones t
 services this one needs and starts them in dependency order:
 
 ```bash
-git clone https://github.com/beyondepic/beyondepic-workspace.git
+# <org> is beyondepic, or beyondepic-public if that is the one you can access
+git clone https://github.com/<org>/beyondepic-workspace.git
 cd beyondepic-workspace && make setup
 ```
 
