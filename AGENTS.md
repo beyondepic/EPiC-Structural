@@ -1,5 +1,42 @@
 # AGENTS.md - EPiC Structural Dashboard
 
+<!-- BEGIN GENERATED ECOSYSTEM - edit .context/repos.yaml in beyondepic-workspace, not here -->
+## Ecosystem
+
+**You are `EPiC-Structural`** - Structural engineering dashboard. Ships a React frontend
+and its own Flask service. Serves on **UI :5177 · API :8002** locally.
+
+You sit in the **Client applications** tier of a multi-repo platform, not a standalone
+project. The full map lives in `beyondepic/beyondepic-workspace`, which is also the
+one-command dev environment.
+
+**What this repo runs:**
+
+| Component | Tech | Port |
+|---|---|---|
+| Frontend | React / Vite | `5177` |
+| Backend | Flask (backend/flask_regression_api.py) | `8002` |
+
+> Was 5175, which collided with EPiC-Explorer. Moved to 5177 with strictPort in the repo itself, so it is correct standalone.
+
+**You depend on:**
+
+| Repo | What it gives you |
+|---|---|
+| `NestedPhoenix` | The Django backend. The EPiC API and the LCA/MFA analysis engine |
+
+**Nothing depends on this repo.** It is a leaf.
+
+**Worth knowing:**
+
+Not self-contained despite its own Flask service: .env sets
+VITE_API_BASE_URL=http://localhost:8000, so it also reads NestedPhoenix.
+
+Cross-repo changes (an API contract, a shared package, a schema) are not a decision for
+one repo. Raise an issue on the canonical repo rather than coordinating it informally.
+<!-- END GENERATED ECOSYSTEM -->
+
+
 This file provides guidance to AI coding agents (Claude Code, and others) when working with the EPiC Structural Dashboard.
 
 ## Project Overview
