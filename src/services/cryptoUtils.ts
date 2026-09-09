@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../config/runtime';
 // Production-ready crypto utilities for AES-GCM encryption/decryption
 // Compatible with backend AES-256-GCM implementation
 
@@ -33,7 +34,7 @@ class CryptoUtils {
   async fetchEncryptionKey() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8002'}/auth/encryption-key`, {
+      const response = await fetch(`${API_BASE_URL}/auth/encryption-key`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

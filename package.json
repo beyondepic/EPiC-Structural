@@ -1,6 +1,6 @@
 {
   "name": "@beyondepic/epic-structural",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "private": true,
   "description": "EPiC Structural Dashboard - Interactive analytics dashboard for structural engineering performance analysis",
