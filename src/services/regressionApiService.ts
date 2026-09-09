@@ -3,8 +3,9 @@
 // Now includes support for encrypted data transmission
 
 import cryptoUtils from './cryptoUtils.js';
+import { API_BASE_URL } from '../config/runtime';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8002';
+
 
 // Helper function to get authorization headers
 function getAuthHeaders() {

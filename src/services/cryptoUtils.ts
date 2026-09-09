@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../config/runtime';
 // Production-ready crypto utilities for AES-GCM encryption/decryption
 // Compatible with backend AES-256-GCM implementation
 
@@ -33,7 +34,7 @@ class CryptoUtils {
   async fetchEncryptionKey() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8002'}/auth/encryption-key`, {
+      const response = await fetch(`${API_BASE_URL}/auth/encryption-key`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -137,9 +138,20 @@ class CryptoUtils {
         ciphertextLength: ciphertext.length
       });
 
-      // Get password from environment or use default
-      // In production, this should come from secure key management
-      const password = process.env.REACT_APP_ENCRYPTION_PASSWORD || 'default-key-change-in-production';
+      // SECURITY: every AES key here derives from this one value, and until
+      // now it was ALWAYS the literal below. `process.env.REACT_APP_*` is a
+      // Create React App leftover that Vite never populates, and
+      // vite.config.ts defines `process.env` as `{}`, so the read could only
+      // ever be undefined. Reading VITE_ENCRYPTION_PASSWORD at least lets the
+      // value come from somewhere real.
+      //
+      // This is NOT a fix for the underlying problem. A build-time constant in
+      // a browser bundle is readable by anyone who opens devtools, so this is
+      // shared-secret obfuscation, not key management. Deliberately NOT moved
+      // to runtime config: publishing it in a fetchable /config.js would be
+      // strictly worse. Needs real key management, tracked separately.
+      const password =
+        import.meta.env.VITE_ENCRYPTION_PASSWORD || 'default-key-change-in-production';
       
       // Derive key from password and extracted salt
       const key = await this.deriveKey(password, salt, this.iterations);
